@@ -2,7 +2,6 @@ package pool
 
 import (
 	"errors"
-	"fmt"
 	"log"
 	"sync/atomic"
 )
@@ -15,7 +14,6 @@ type (
 		tasks    chan *Task
 	}
 	Task struct {
-		Name    string
 		Handler func(v ...interface{})
 		Params  []interface{}
 	}
@@ -51,7 +49,6 @@ func (p *Pool) Run() {
 			select {
 			case task, ok := <-p.tasks:
 				if ok {
-					fmt.Println(task.Name)
 					task.Handler(task.Params)
 				}
 			}
